@@ -1,5 +1,7 @@
 plugins {
     id 'java'
+    id 'application'
+    id "jacoco"
 }
 
 group 'game'
@@ -7,6 +9,9 @@ version '1.0-SNAPSHOT'
 
 sourceCompatibility = 1.8
 
+application {
+    mainClassName = 'pacman.Main'
+}
 
 repositories {
     mavenCentral()
@@ -14,4 +19,19 @@ repositories {
 
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
+}
+
+jacoco {
+    toolVersion = "0.8.4"
+}
+
+task fatJar(type: Jar) {
+    manifest {
+        attributes 'Implementation-Title': 'Chess_game',
+                'Implementation-Version': '0.0.1',
+                'Main-Class': 'org.Launcher'
+    }
+    baseName = project.name + '-all'
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
 }

@@ -25,56 +25,57 @@ public class AWTGUIFacade implements IGUIFacade {
         fonts = new AWTFonts();
     }
 
-    @Override
-    public void createWindow(String title) {
-        if (window == null) {
-            window = new AWTWindow();
-        }
-        window.init(title);
-        window.setLocationRelativeTo(null);
-        window.setVisible(true);
-    }
-
     public boolean isClosingRequested() {
-        return window.isClosingRequested();
+        return this.window.isClosingRequested();
     }
 
 
     public void setClosingRequested(boolean closingRequested) {
-        window.setClosingRequested(closingRequested);
+        this.window.setClosingRequested(closingRequested);
     }
 
     public void dispose() {
-        window.dispose();
+        this.window.dispose();
+    }
+
+    @Override
+    public void createWindow(int width, int height, String title) {
+        if (window == null) {
+            window = new AWTWindow();
+        }
+        window.init(title);
+        window.createCanvas(width, height);
+        window.setLocationRelativeTo(null);
+        window.setVisible(true);
     }
 
     public boolean beginPaint() {
-        if (graphics != null) {
-            graphics.dispose();
+        if (this.graphics != null) {
+            this.graphics.dispose();
         }
-        graphics = window.createGraphics();
-        if (graphics == null) {
+        this.graphics = this.window.createGraphics();
+        if (this.graphics == null) {
             return false;
         }
         return true;
     }
 
     public void endPaint() {
-        if (graphics == null) {
+        if (this.graphics == null) {
             return;
         }
 
-        graphics.dispose();
-        graphics = null;
-        window.switchBuffers();
+        this.graphics.dispose();
+        this.graphics = null;
+        this.window.switchBuffers();
     }
 
     public void clearBackground() {
-        if (graphics == null) {
+        if (this.graphics == null) {
             return;
         }
-        graphics.setColor(Color.black);
-        graphics.fillRect(0, 0, window.getCanvasWidth(), window.getCanvasHeight());
+        this.graphics.setColor(Color.black);
+        this. graphics.fillRect(0, 0, window.getCanvasWidth(), window.getCanvasHeight());
     }
 
     @Override
@@ -84,7 +85,7 @@ public class AWTGUIFacade implements IGUIFacade {
 
     @Override
     public void drawLayer(ILayer layer) {
-        if (graphics == null) {
+        if (this.graphics == null) {
             return;
         }
         if (layer == null)
@@ -92,7 +93,7 @@ public class AWTGUIFacade implements IGUIFacade {
         if (!(layer instanceof AWTLayer))
             throw new IllegalArgumentException("Type de layer invalide");
         AWTLayer awtLayer = (AWTLayer) layer;
-        awtLayer.draw(graphics);
+        awtLayer.draw(this.graphics);
         //this.saveLayer(awtLayer);
     }
 
@@ -109,15 +110,15 @@ public class AWTGUIFacade implements IGUIFacade {
     }
 
     public IKeyboard getKeyboard() {
-        if (window == null)
+        if (this.window == null)
             throw new RuntimeException("Il faut d'abord créer une fenêtre");
-        return window.getKeyboard();
+        return this.window.getKeyboard();
     }
 
     public IMouse getMouse() {
-        if (window == null)
+        if (this.window == null)
             throw new RuntimeException("Il faut d'abord créer une fenêtre");
-        return window.getMouse();
+        return this.window.getMouse();
     }
 
     public IImage createImage(String fileName) {
@@ -127,7 +128,7 @@ public class AWTGUIFacade implements IGUIFacade {
     }
 
     public void drawImage(IImage image,int x,int y) {
-        if (graphics == null) {
+        if (this.graphics == null) {
             return;
         }
         if (image == null)
@@ -135,36 +136,36 @@ public class AWTGUIFacade implements IGUIFacade {
         if (!(image instanceof AWTImage))
             throw new IllegalArgumentException("Type de image invalide");
         AWTImage awtImage = (AWTImage) image;
-        awtImage.draw(graphics,x,y);
+        awtImage.draw(this.graphics, x, y);
     }
 
     public void setColor(Color color) {
-        if (graphics == null)
+        if (this.graphics == null)
             return;
-        graphics.setColor(color);
+        this.graphics.setColor(color);
     }
 
     public void setTextSize(int size) {
-        if (graphics == null)
+        if (this.graphics == null)
             return;
-        graphics.setFont(fonts.getFont(graphics,size));
+        this.graphics.setFont(this.fonts.getFont(this.graphics,size));
     }
 
     @Override
     public Dimension getTextMetrics(String text) {
-        FontMetrics fm = graphics.getFontMetrics();
+        FontMetrics fm = this.graphics.getFontMetrics();
         int textWidth = fm.stringWidth(text);
         int textHeight = fm.getHeight();
         return new Dimension(textWidth,textHeight);
     }
 
     public void drawText(String text, int x, int y, int width, int height) {
-        if (graphics == null)
+        if (this.graphics == null)
             return;
-        FontMetrics fm = graphics.getFontMetrics();
-        graphics.clipRect(x, y, width, height);
-        graphics.drawString(text, x, y+fm.getAscent());
-        graphics.setClip(null);
+        FontMetrics fm = this.graphics.getFontMetrics();
+        this.graphics.clipRect(x, y, width, height);
+        this.graphics.drawString(text, x, y+fm.getAscent());
+        this.graphics.setClip(null);
     }
 
 }

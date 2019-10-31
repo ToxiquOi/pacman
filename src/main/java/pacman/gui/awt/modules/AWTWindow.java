@@ -10,7 +10,7 @@ import java.awt.image.BufferStrategy;
 
 public class AWTWindow extends Frame {
 
-    private boolean closingRequested;
+    private boolean closingRequested = false;
 
     private Canvas canvas;
 
@@ -25,52 +25,54 @@ public class AWTWindow extends Frame {
     private AWTMouse mouse;
 
     public void init(String title) {
-        setTitle(title);
-        setResizable(false);
-        addWindowListener(new WindowAdapter() {
+        this.setTitle(title);
+        this.setResizable(false);
+        this.setVisible(true);
+
+        this.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent we) {
                 closingRequested = true;
             }
         });
-        addWindowFocusListener(new WindowAdapter() {
+        this.addWindowFocusListener(new WindowAdapter() {
             public void windowGainedFocus(WindowEvent e) {
                 if (canvas != null) {
                     canvas.requestFocusInWindow();
                 }
             }
         });
-        closingRequested = false;
+        this.closingRequested = false;
     }
 
     public void createCanvas(int width, int height) {
-        if (canvas == null) {
-            canvas = new Canvas();
-            add(canvas);
+        if (this.canvas == null) {
+            this.canvas = new Canvas();
+            this.add(canvas);
         }
-        if (canvasWidth != width || canvasHeight != height ) {
-            setVisible(false);
-            canvasWidth = width;
-            canvasHeight = height;
-            canvas.setPreferredSize(new Dimension(canvasWidth, canvasHeight));
-            canvas.setMinimumSize(new Dimension(canvasWidth, canvasHeight));
-            canvas.setMaximumSize(new Dimension(canvasWidth, canvasHeight));
-            pack();
+        if (this.canvasWidth != width || this.canvasHeight != height ) {
+            this.setVisible(false);
+            this.canvasWidth = width;
+            this.canvasHeight = height;
+            this.canvas.setPreferredSize(new Dimension(this.canvasWidth, this.canvasHeight));
+            this.canvas.setMinimumSize(new Dimension(this.canvasWidth, this.canvasHeight));
+            this.canvas.setMaximumSize(new Dimension(this.canvasWidth, this.canvasHeight));
+            this.pack();
         }
 
         if (keyboard == null) {
-            keyboard = new AWTKeyboard();
-            canvas.addKeyListener(keyboard);
+            this.keyboard = new AWTKeyboard();
+            this.canvas.addKeyListener(this.keyboard);
         }
 
         if (mouse == null) {
-            mouse = new AWTMouse();
-            canvas.addMouseListener(mouse);
-            canvas.addMouseMotionListener(mouse);
+            this.mouse = new AWTMouse();
+            this.canvas.addMouseListener(this.mouse);
+            this.canvas.addMouseMotionListener(this.mouse);
         }
     }
 
     public boolean isClosingRequested() {
-        return closingRequested;
+        return this.closingRequested;
     }
 
     public void setClosingRequested(boolean closingRequested) {
@@ -78,34 +80,35 @@ public class AWTWindow extends Frame {
     }
 
     public Graphics createGraphics() {
-        bs = canvas.getBufferStrategy();
-        if (bs == null) {
-            canvas.createBufferStrategy(2);
+        this.bs = this.canvas.getBufferStrategy();
+        if (this.bs == null) {
+            this.canvas.createBufferStrategy(2);
+            this.bs = this.canvas.getBufferStrategy();
             return null;
         }
-        return bs.getDrawGraphics();
+        return this.bs.getDrawGraphics();
     }
 
     public int getCanvasWidth() {
-        return canvasWidth;
+        return this.canvasWidth;
     }
 
     public int getCanvasHeight() {
-        return canvasHeight;
+        return this.canvasHeight;
     }
 
     public void switchBuffers() {
-        if (bs != null) {
-            bs.show();
+        if (this.bs != null) {
+            this.bs.show();
         }
     }
 
     public AWTKeyboard getKeyboard() {
-        return keyboard;
+        return this.keyboard;
     }
 
     public AWTMouse getMouse() {
-        return mouse;
+        return this.mouse;
     }
 
 }

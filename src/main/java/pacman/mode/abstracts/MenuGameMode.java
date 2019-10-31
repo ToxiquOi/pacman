@@ -11,38 +11,61 @@ public abstract class MenuGameMode extends GameMode {
 
     protected int selectedItem = 0;
 
-    private IImage backgroundImage;
+    private IImage titleImage;
 
     private IImage selectImage;
+
+    private final static int windowWidth = 640;
+
+    private final static int windowHeight = 480;
 
     @Override
     public void init() {
         this.keyboard = this.gui.getKeyboard();
+        this.titleImage = this.gui.createImage("pacman_title.png");
         this.selectImage = this.gui.createImage("select.png");
+
+        this.gui.createWindow(windowWidth, windowHeight, "Pacman");
     }
 
     @Override
     public void render() {
-        this.gui.clearBackground();
+        if (!gui.beginPaint())
+            return;
+        try {
+            gui.clearBackground();
+            gui.drawImage(titleImage,
+                    (windowWidth-titleImage.getWidth())/2,
+                    50
+            );
+            gui.setColor(Color.white);
+            gui.setTextSize(selectImage.getHeight());
 
-        this.gui.setColor(Color.WHITE);
-        Dimension menuSize = this.paintMenu(0, 0, true);
-//        this.paintMenu((CBoard.BOARD_WIDTH - menuSize.width) / 2, (CBoard.BOARD_HEIGHT - menuSize.height) / 2, false);
+            Dimension menuSize = paintMenu(0,0,true);
+            paintMenu(
+                    (windowWidth-menuSize.width)/2,
+                    50+titleImage.getHeight()+selectImage.getHeight()/2,
+                    false
+            );
+
+        } finally {
+            gui.endPaint();
+        }
     }
 
     protected Dimension paintMenu(int x, int y, boolean computeSize) {
         int menuWidth = 0;
         int menuHeight = 0;
 
-        for (int i=0; i < items.size(); i++) {
-            String text = items.get(i);
+        for (int i=0; i < this.items.size(); i++) {
+            String text = this.items.get(i);
             this.gui.setTextSize(30);
 
-            Dimension textSize = gui.getTextMetrics(text);
+            Dimension textSize = this.gui.getTextMetrics(text);
             if (!computeSize) {
                 this.gui.drawText(text, x, y, textSize.width, textSize.height);
-                if (i == selectedItem) {
-                    this.gui.drawImage(selectImage, x - selectImage.getWidth(), y - 10);
+                if (i == this.selectedItem) {
+                    this.gui.drawImage(this.selectImage, x - this.selectImage.getWidth(), y - 10);
                 }
             }
             y += textSize.height;

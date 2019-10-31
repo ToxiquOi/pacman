@@ -4,7 +4,7 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public interface IGUIFacade {
-    void createWindow(String title);
+    void createWindow(int width, int height, String title);
     boolean beginPaint();
     void endPaint();
     void clearBackground();

@@ -10,6 +10,8 @@ import java.util.LinkedList;
 
 public class Main {
 
+    private static final String APP_TITLE = "Pacman";
+
     private IGUIFacade gui;
 
     private GameMode currentMode;
@@ -50,6 +52,7 @@ public class Main {
         int fps = 60;
         long nanoPerFrame = (long) (1000000000.0 / fps);
         long lastTime = 0;
+
         while (!gui.isClosingRequested()) {
             long nowTime = System.nanoTime();
             if ((nowTime - lastTime) < nanoPerFrame) {
