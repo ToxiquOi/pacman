@@ -1,6 +1,6 @@
-package pacman.state.characters;
+package pacman.state.element.characters;
 
-import pacman.state.characters.abstracts.MobileElement;
+import pacman.state.element.characters.abstracts.MobileElement;
 
 import java.util.ArrayList;
 

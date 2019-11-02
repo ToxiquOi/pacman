@@ -1,9 +1,10 @@
 package pacman.state.element;
 
 
-import pacman.state.element.abstracts.StaticElement;
+import pacman.state.element.static_element.abstracts.StaticElement;
 import pacman.state.element.iterators.WorldIterator;
 import pacman.state.element.interfaces.IWorldIterator;
+import pacman.state.enumerations.EDirection;
 
 public class World implements Iterable<StaticElement> {
 
@@ -12,7 +13,7 @@ public class World implements Iterable<StaticElement> {
 
     private StaticElement[][] elements;
 
-    private void init(int[][] level) {
+    public void init(int[][] level) {
 
     }
 
@@ -28,7 +29,7 @@ public class World implements Iterable<StaticElement> {
         this.elements[x][y] = e;
     }
 
-    public StaticElement get(int x, int y) {
+    public StaticElement get(int x, int y, EDirection d) {
         return null;
     }
 

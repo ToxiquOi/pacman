@@ -1,5 +1,6 @@
 package pacman.mode.menu;
 
+import pacman.mode.PlayGM;
 import pacman.mode.abstracts.MenuGameMode;
 
 import java.awt.event.KeyEvent;
@@ -9,7 +10,7 @@ public class MainMenuGM extends MenuGameMode {
 
     public MainMenuGM() {
         this.items.add("Play");
-        this.items.add("Options");
+        this.items.add("Unknown");
         this.items.add("Exit");
     }
 
@@ -49,7 +50,7 @@ public class MainMenuGM extends MenuGameMode {
                 this.keyboard.consumeLastPressedKey();
                 switch (selectedItem) {
                     case 0:
-//                        this.setGameMode(new PlayGM());
+                        this.setGameMode(new PlayGM());
                         break;
 
                     case 1:

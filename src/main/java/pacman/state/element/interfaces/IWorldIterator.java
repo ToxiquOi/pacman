@@ -1,7 +1,7 @@
 package pacman.state.element.interfaces;
 
 import pacman.state.element.World;
-import pacman.state.element.abstracts.StaticElement;
+import pacman.state.element.static_element.abstracts.StaticElement;
 
 import java.util.Iterator;
 

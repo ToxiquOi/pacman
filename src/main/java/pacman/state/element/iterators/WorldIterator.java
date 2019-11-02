@@ -1,8 +1,9 @@
 package pacman.state.element.iterators;
 
 import pacman.state.element.World;
-import pacman.state.element.abstracts.StaticElement;
+import pacman.state.element.static_element.abstracts.StaticElement;
 import pacman.state.element.interfaces.IWorldIterator;
+import pacman.state.enumerations.EDirection;
 
 import java.util.NoSuchElementException;
 
@@ -55,6 +56,6 @@ public class WorldIterator implements IWorldIterator {
             throw new NoSuchElementException("position x: " + this.x + ", y: " + this.y);
         }
 
-        return this.world.get(this.x, this.y);
+        return this.world.get(this.x, this.y, EDirection.NONE);
     }
 }
