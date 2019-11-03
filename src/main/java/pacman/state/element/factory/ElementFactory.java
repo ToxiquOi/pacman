@@ -9,11 +9,6 @@ import pacman.state.enumerations.EWallTypeId;
 
 
 public class ElementFactory extends Factory<Integer, ElementCreator, Element> {
-
-    private ElementFactory() {
-        super();
-    }
-
     public static ElementFactory getDefault() {
         ElementFactory factory = new ElementFactory();
         factory.register(0, new ElementCreator() {
