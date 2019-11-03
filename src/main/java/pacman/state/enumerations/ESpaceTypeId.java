@@ -14,6 +14,10 @@ public enum ESpaceTypeId {
         this.code = code;
     }
 
+    public int getCode() {
+        return code;
+    }
+
     public static ESpaceTypeId fromCode(int code) {
         switch(code) {
             case 0: return EMPTY;

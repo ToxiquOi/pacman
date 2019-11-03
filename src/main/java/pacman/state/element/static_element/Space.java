@@ -9,4 +9,8 @@ public class Space extends StaticElement {
     public Space(ESpaceTypeId spaceTypeId) {
         this.spaceTypeId = spaceTypeId;
     }
+
+    public ESpaceTypeId getSpaceTypeId() {
+        return spaceTypeId;
+    }
 }
