@@ -6,9 +6,4 @@ import pacman.state.enumerations.EPacmanState;
 
 public class Pacman extends MobileElement {
     EPacmanState pacmanState;
-
-    @Override
-    public Element create() {
-        return null;
-    }
 }

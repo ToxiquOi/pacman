@@ -10,9 +10,4 @@ public class Wall extends StaticElement {
     }
 
     EWallTypeId wallTypeId;
-
-    @Override
-    public Element create() {
-        return null;
-    }
 }
